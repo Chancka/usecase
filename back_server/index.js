@@ -16,7 +16,6 @@ mongoose
   )
   .then(() => {
     app.listen(port, () => console.log(`Server listening on port ${port}`));
-    // fetchImageFromAPI();
     console.log("Connected to MongoDB");
   })
   .catch((err) => console.log("Failed to connect to MongoDB", err));

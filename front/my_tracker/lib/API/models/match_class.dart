@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Match {
-  // String? id;
+  String? id;
   String resultOfMatch;
   String typeOfMatch;
   DateTime dateOfMatch;
@@ -12,6 +12,7 @@ class Match {
   String comment;
 
   Match({
+    this.id,
     required this.resultOfMatch,
     required this.typeOfMatch,
     required this.dateOfMatch,
@@ -22,9 +23,8 @@ class Match {
   });
 
   factory Match.fromJson(Map<String, dynamic> json) {
-    print('PRPIKOJNCKJN');
-    print(json);
     return Match(
+      id: json['_id'] ?? '',
       resultOfMatch: json['resultOfMatch'] ?? '',
       typeOfMatch: json['typeOfMatch'] ?? '',
       dateOfMatch: DateTime.parse(json['dateOfMatch']),
