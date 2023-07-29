@@ -3,6 +3,7 @@ import 'package:my_tracker/widgets/add_match.dart';
 import 'package:my_tracker/API/models/match_class.dart';
 import 'package:my_tracker/API/get_history.dart';
 import 'package:my_tracker/API/models/history_class.dart';
+import 'package:my_tracker/widgets/card_match.dart';
 
 // HomeView widget, the home page of the app
 class HomeView extends StatefulWidget {
@@ -23,9 +24,10 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
-  void _addMatchCallback(Match match) {
+  void _matchCallback(Match match) async {
+    List<Match> matches = await getHistory();
     setState(() {
-      _matches.add(match);
+      _matches = matches;
     });
   }
   @override
@@ -39,7 +41,7 @@ class _HomeViewState extends State<HomeView> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddMatch(addMatchCallback : _addMatchCallback),
+            builder: (BuildContext context) => AddMatch(addMatchCallback : _matchCallback),
           );
         },
         label: const Text('Add Match'),
@@ -47,34 +49,14 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 2),
+              (MediaQuery.of(context).size.height / 3),
         ),
         itemCount: _matches.length,
         itemBuilder: (context, index) {
           return SizedBox(
-            height: 300,
-            width: 200,
-            child: Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              margin: EdgeInsets.all(10),
-              child: Column(
-                children: [ 
-                  ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(_matches[index].imageOfCharacter),
-                    ),
-                    title: Text(_matches[index].typeOfMatch),
-                    subtitle: Text(_matches[index].resultOfMatch),
-                    trailing: Text(_matches[index].kda),
-                  ),
-                ],
-              ),
-            ),
+            child: MatchCard(match: _matches[index], deleteMatchCallback: _matchCallback),
           );
         },
       ),
