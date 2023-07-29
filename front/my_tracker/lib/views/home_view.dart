@@ -29,6 +29,18 @@ class _HomeViewState extends State<HomeView> {
     setState(() {
       _matches = matches;
     });
+    int _defeatCounter = 0;
+    for (int i = 0; i < _matches.length; i++) {
+      if (_matches[i].resultOfMatch == 'Defeat') _defeatCounter++;
+      else _defeatCounter = 0;
+      if (_defeatCounter == 3) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) => _showMessageOfShame(),
+        );
+        break;
+      }
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class _HomeViewState extends State<HomeView> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddMatch(addMatchCallback : _matchCallback),
+            builder: (BuildContext context) => AddMatch(matchCallback : _matchCallback),
           );
         },
         label: const Text('Add Match'),
@@ -49,17 +61,32 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: MediaQuery.of(context).size.width /
-              (MediaQuery.of(context).size.height / 3),
+          crossAxisCount: 5,
+          childAspectRatio: 2.3,
+
         ),
         itemCount: _matches.length,
         itemBuilder: (context, index) {
           return SizedBox(
-            child: MatchCard(match: _matches[index], deleteMatchCallback: _matchCallback),
+            child: MatchCard(match: _matches[index], matchCallback: _matchCallback),
           );
         },
       ),
+    );
+  }
+
+  AlertDialog _showMessageOfShame() {
+    return AlertDialog(
+      title: Text('Shame on you!'),
+      content: Text("T'es aussi éclaté au sol que ma grand mère"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Ok'),
+        ),
+      ],
     );
   }
 }

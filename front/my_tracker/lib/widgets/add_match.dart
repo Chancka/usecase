@@ -28,9 +28,9 @@ List<String> arrayCharacter = [
 ];
 // AddMatch widget, a dialog that allows the user to add a match
 class AddMatch extends StatefulWidget {
-  final Function addMatchCallback;
+  final Function matchCallback;
 
-  AddMatch({required this.addMatchCallback});
+  AddMatch({required this.matchCallback});
 
   @override
   State<StatefulWidget> createState() => _AddMatchState();
@@ -65,9 +65,7 @@ class _AddMatchState extends State<AddMatch> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
+              SizedBox(height: 16),
               Form(
                 key: _formKey,
                 child: Column(
@@ -154,6 +152,9 @@ class _AddMatchState extends State<AddMatch> {
                         if (_kda.length != 3) {
                           return 'Format of KDA must be x/x/x';
                         }
+                        if (int.parse(_kda[0]) + int.parse(_kda[2]) > 20) {
+                          return 'Kill + Assist must be less than 20';
+                        }
                         if (value?.isEmpty ?? true) {
                           return 'Please enter a KDA';
                         }
@@ -172,9 +173,7 @@ class _AddMatchState extends State<AddMatch> {
                         return null;
                       },
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
+                    SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -200,7 +199,7 @@ class _AddMatchState extends State<AddMatch> {
                                 dateOfMatch: DateTime.now(),
                               );
                               await postMatch(match);
-                              widget.addMatchCallback(match);
+                              widget.matchCallback(match);
                               Navigator.of(context).pop();
                             }
                           },
