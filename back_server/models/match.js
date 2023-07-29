@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const matchSchema = new mongoose.Schema({
+const matchSchema = mongoose.Schema({
   resultOfMatch: {
     type: String,
     required: true,
@@ -10,7 +10,7 @@ const matchSchema = new mongoose.Schema({
     required: true,
   },
   dateOfMatch: {
-    type: String,
+    type: Date,
     required: true,
   },
   imageOfCharacter: {
