@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:my_tracker/widgets/date_picker.dart';
+import 'package:my_tracker/API/models/match_class.dart';
+import 'package:my_tracker/API/post_match.dart';
 
 // AddMatch widget, a dialog that allows the user to add a match
 class AddMatch extends StatefulWidget {
-  // final Function addMatchCallback;
+  final Function addMatchCallback;
 
-  // AddMatch({this.addMatchCallback});
+  AddMatch({required this.addMatchCallback});
 
   @override
   State<StatefulWidget> createState() => _AddMatchState();
@@ -13,10 +14,12 @@ class AddMatch extends StatefulWidget {
 
 class _AddMatchState extends State<AddMatch> {
   final _formKey = GlobalKey<FormState>();
-  final _matchNameController = TextEditingController();
-  final _matchDateController = TextEditingController();
-  final _matchTimeController = TextEditingController();
-  final _matchLocationController = TextEditingController();
+  TextEditingController _resultOfMatchController = TextEditingController();
+  TextEditingController typeOfMatchController = TextEditingController();
+  TextEditingController _characterController = TextEditingController();
+  TextEditingController _kdaController = TextEditingController();
+  TextEditingController _roleController = TextEditingController();
+  TextEditingController _commentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class _AddMatchState extends State<AddMatch> {
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
-              controller: _matchNameController,
+              controller: _resultOfMatchController,
               decoration: InputDecoration(
                 labelText: 'Result',
               ),
@@ -40,7 +43,7 @@ class _AddMatchState extends State<AddMatch> {
               },
             ),
             TextFormField(
-              controller: _matchDateController,
+              controller: typeOfMatchController,
               decoration: InputDecoration(
                 labelText: 'Type of Match',
               ),
@@ -51,10 +54,8 @@ class _AddMatchState extends State<AddMatch> {
                 return null;
               },
             ),
-            SizedBox(height: 10),
-            DatePicker(),
             TextFormField(
-              controller: _matchTimeController,
+              controller: _characterController,
               decoration: InputDecoration(
                 labelText: 'Name of character',
               ),
@@ -66,7 +67,7 @@ class _AddMatchState extends State<AddMatch> {
               },
             ),
             TextFormField(
-              controller: _matchLocationController,
+              controller: _kdaController,
               decoration: InputDecoration(
                 labelText: 'KDA',
               ),
@@ -78,7 +79,7 @@ class _AddMatchState extends State<AddMatch> {
               },
             ),
             TextFormField(
-              controller: _matchLocationController,
+              controller: _roleController,
               decoration: InputDecoration(
                 labelText: 'Role',
               ),
@@ -90,7 +91,7 @@ class _AddMatchState extends State<AddMatch> {
               },
             ),
             TextFormField(
-              controller: _matchLocationController,
+              controller: _commentController,
               decoration: InputDecoration(
                 labelText: 'Comment',
               ),
@@ -112,8 +113,19 @@ class _AddMatchState extends State<AddMatch> {
           child: Text('Cancel'),
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState?.validate() ?? false) {
+              Match match = Match(
+                resultOfMatch: _resultOfMatchController.text,
+                typeOfMatch: typeOfMatchController.text,
+                imageOfCharacter: _characterController.text,
+                kda: _kdaController.text,
+                role: _roleController.text,
+                comment: _commentController.text,
+                dateOfMatch: DateTime.now(),
+              );
+              await postMatch(match);
+              widget.addMatchCallback(match);
               Navigator.of(context).pop();
             }
           },
