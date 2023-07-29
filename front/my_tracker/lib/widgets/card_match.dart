@@ -69,6 +69,7 @@ class _MatchCardState extends State<MatchCard> {
               widget.match.dateOfMatch.toString().substring(0, 10),
               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
             ),
+            SizedBox(width: 3),
             Icon(Icons.schedule, size: 14, color: Colors.grey[600]),
           ],
         ),

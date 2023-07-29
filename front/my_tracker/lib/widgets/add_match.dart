@@ -189,6 +189,11 @@ class _AddMatchState extends State<AddMatch> {
                               String nameOfCharacter =
                                   _characterController.text;
                               nameOfCharacter = nameOfCharacter.toLowerCase();
+                              String _dateOfMatch = DateTime.now().toString();
+                              _dateOfMatch = _dateOfMatch.split(' ')[0];
+                              List<String> _date = _dateOfMatch.split('-');
+                              _dateOfMatch =
+                                  '${_date[2]}-${_date[1]}-${_date[0]}';
                               Match match = Match(
                                 resultOfMatch: _resultOfMatch,
                                 typeOfMatch: _typeOfMatch,
@@ -196,7 +201,7 @@ class _AddMatchState extends State<AddMatch> {
                                 kda: _kdaController.text,
                                 role: _roleController.text,
                                 comment: _commentController.text,
-                                dateOfMatch: DateTime.now(),
+                                dateOfMatch: _dateOfMatch,
                               );
                               await postMatch(match);
                               widget.matchCallback(match);

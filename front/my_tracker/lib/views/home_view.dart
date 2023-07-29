@@ -30,7 +30,8 @@ class _HomeViewState extends State<HomeView> {
       _matches = matches;
     });
     int _defeatCounter = 0;
-    for (int i = 0; i < _matches.length; i++) {
+    if (_matches.length < 3) return;
+    for (int i = _matches.length - 1; i >= _matches.length - 3; i--) {
       if (_matches[i].resultOfMatch == 'Defeat') _defeatCounter++;
       else _defeatCounter = 0;
       if (_defeatCounter == 3) {
@@ -51,10 +52,17 @@ class _HomeViewState extends State<HomeView> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => AddMatch(matchCallback : _matchCallback),
-          );
+          if (_isAlreadyFiveMatchesADay()) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => _showMessageRestricted(),
+            );
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => AddMatch(matchCallback : _matchCallback),
+            );
+          }
         },
         label: const Text('Add Match'),
         icon: const Icon(Icons.add),
@@ -75,10 +83,39 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
+  bool _isAlreadyFiveMatchesADay() {
+    int _counter = 0;
+    String _dateTime = DateTime.now().toString();
+    _dateTime = _dateTime.split(' ')[0];
+    List<String> _date = _dateTime.split('-');
+    _dateTime =
+      '${_date[2]}-${_date[1]}-${_date[0]}';
+    for (int i = 0; i < _matches.length; i++) {
+      if (_matches[i].dateOfMatch.toString().substring(0, 10) == _dateTime) _counter++;
+    }
+    if (_counter >= 5) return true;
+    else return false;
+  }
+
   AlertDialog _showMessageOfShame() {
     return AlertDialog(
       title: Text('Shame on you!'),
       content: Text("T'es aussi éclaté au sol que ma grand mère"),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Ok'),
+        ),
+      ],
+    );
+  }
+
+  AlertDialog _showMessageRestricted() {
+    return AlertDialog(
+      title: Text('Restricted'),
+      content: Text("Tu as déjà fait 5 matchs aujourd'hui, reviens demain"),
       actions: [
         TextButton(
           onPressed: () {
