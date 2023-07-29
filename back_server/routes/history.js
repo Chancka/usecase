@@ -85,7 +85,7 @@ router
     const match = new Match({
       resultOfMatch: req.body.resultOfMatch,
       typeOfMatch: req.body.typeOfMatch,
-      dateOfMatch: req.body.dateOfMatch,
+      dateOfMatch: req.body.dateOfMatch.slice(0, 10),
       imageOfCharacter: imageOfCharacter,
       kda: req.body.kda,
       role: role,

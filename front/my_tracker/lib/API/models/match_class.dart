@@ -5,7 +5,7 @@ class Match {
   String? id;
   String resultOfMatch;
   String typeOfMatch;
-  DateTime dateOfMatch;
+  String dateOfMatch;
   String imageOfCharacter;
   String kda;
   String role;
@@ -27,7 +27,7 @@ class Match {
       id: json['_id'] ?? '',
       resultOfMatch: json['resultOfMatch'] ?? '',
       typeOfMatch: json['typeOfMatch'] ?? '',
-      dateOfMatch: DateTime.parse(json['dateOfMatch']),
+      dateOfMatch: (json['dateOfMatch']),
       imageOfCharacter: json['imageOfCharacter'] ?? '',
       kda: json['kda'] ?? '',
       role: json['role'] ?? '',
@@ -39,7 +39,7 @@ class Match {
     return {
       'resultOfMatch': resultOfMatch,
       'typeOfMatch': typeOfMatch,
-      'dateOfMatch': dateOfMatch.toIso8601String(),
+      'dateOfMatch': dateOfMatch,
       'imageOfCharacter': imageOfCharacter,
       'kda': kda,
       'role': role,

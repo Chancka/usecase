@@ -10,7 +10,7 @@ const matchSchema = mongoose.Schema({
     required: true,
   },
   dateOfMatch: {
-    type: Date,
+    type: String,
     required: true,
   },
   imageOfCharacter: {
