@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_tracker/widgets/add_match.dart';
 import 'package:my_tracker/API/models/match_class.dart';
 import 'package:my_tracker/API/get_history.dart';
-import 'package:my_tracker/API/models/history_class.dart';
 import 'package:my_tracker/widgets/card_match.dart';
 
 // HomeView widget, the home page of the app
