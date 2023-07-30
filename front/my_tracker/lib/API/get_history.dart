@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:my_tracker/API/models/match_class.dart';
 
 Future<List<Match>> getHistory() async {
-  final String apiUrl = 'http://localhost:4242/history';
+  final String apiUrl = 'http://localhost:4242/match';
 
   try {
     final response = await http.get(Uri.parse(apiUrl));

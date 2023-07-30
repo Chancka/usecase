@@ -2,11 +2,11 @@ const express = require("express");
 const app = express();
 const port = 4242;
 const mongoose = require("mongoose");
-const history = require("./routes/history");
+// const history = require("./routes/history");
 const match = require("./routes/match");
 
 app.use(express.json());
-app.use("/history", history);
+// app.use("/history", history);
 app.use("/match", match);
 
 mongoose.set("strictQuery", false);
