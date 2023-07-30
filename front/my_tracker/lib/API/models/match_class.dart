@@ -10,6 +10,7 @@ class Match {
   String kda;
   String role;
   String comment;
+  String? nameOfCharacter;
 
   Match({
     this.id,
@@ -20,6 +21,7 @@ class Match {
     required this.kda,
     required this.role,
     required this.comment,
+    this.nameOfCharacter,
   });
 
   factory Match.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class Match {
       kda: json['kda'] ?? '',
       role: json['role'] ?? '',
       comment: json['comment'] ?? '',
+      nameOfCharacter: json['nameOfCharacter'] ?? '',
     );
   }
 
@@ -44,6 +47,7 @@ class Match {
       'kda': kda,
       'role': role,
       'comment': comment,
+      'nameOfCharacter': nameOfCharacter,
     };
   }
 }

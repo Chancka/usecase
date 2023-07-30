@@ -18,7 +18,7 @@ class _MatchCardState extends State<MatchCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: widget.match.resultOfMatch == 'Victory' ? Colors.green[200] : Colors.red[200],
+      color: widget.match.resultOfMatch == 'Victory' ? Colors.blue[100] : Colors.red[200],
       elevation: 5,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -46,7 +46,7 @@ class _MatchCardState extends State<MatchCard> {
     );
   }
 
-// Builds the match info
+// Builds the match info (type of match, date of match, role, kda, average kda, result of match, comment)
   Column _buildMatchInfo() {
     List<String> _kda = widget.match.kda.split('/');
     double _averageKda;
@@ -59,11 +59,11 @@ class _MatchCardState extends State<MatchCard> {
           children: [
             Text(
               widget.match.typeOfMatch,
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: Colors.grey[800]),
             ),
             Text(
               ' - ',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
             Text(
               widget.match.dateOfMatch.toString().substring(0, 10),
@@ -112,6 +112,7 @@ class _MatchCardState extends State<MatchCard> {
     );
   }
 
+// Handles the edit of a match, displays a dialog to change the comment
   void _handleEdit() async {
     showDialog(
       context: context,
@@ -157,7 +158,8 @@ class _MatchCardState extends State<MatchCard> {
       }
     );
   }
-// Builds the buttons
+
+// Builds the buttons to edit and delete a match
   Column _buildButtons() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,

@@ -29,6 +29,10 @@ const matchSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  nameOfCharacter: {
+    type: String,
+    required: true,
+  },
 });
 
 const Match = mongoose.model("Match", matchSchema);

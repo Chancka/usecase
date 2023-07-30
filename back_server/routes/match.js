@@ -26,6 +26,11 @@ router
   .delete(async (req, res) => {
     try {
       const match = await Match.findById(req.params.id);
+      if (!match) {
+        res.status(404);
+        res.send("Match not found");
+        return;
+      }
       await match.deleteOne({ _id: req.params.id });
       res.status(204);
       res.send();
@@ -121,7 +126,6 @@ router
     const matches = await Match.find();
     res.status(200);
     res.send(matches);
-    fetchImageLoLFromAPI();
   })
   .post(async (req, res) => {
     const imageOfCharacter = await fetchImageFromAPI(req.body.imageOfCharacter);
@@ -134,6 +138,7 @@ router
       kda: req.body.kda,
       role: role,
       comment: req.body.comment,
+      nameOfCharacter: req.body.imageOfCharacter,
     });
     await match.save();
     res.status(201);
